@@ -31,17 +31,18 @@ int deinit()
 int start()
   {
 
+   int handle = FileOpen("EALog.csv",FILE_CSV|FILE_READ|FILE_WRITE);
    string CurrentSymbol = Symbol();
    double Lots = 0.1;
-   double PriceJump = 5;
-   double stoploss = 5;
-   double takeprofit = 15;
+   double PriceJump = 50;
+   double stoploss = 50;
+   double takeprofit = 300;
 
-   //定义事件的时间，注意是北京时间 - 8小时
-   datetime EventTime = StrToTime("2013.2.7 12:41");
+   //定义事件的时间，注意是北京时间 - 6小时(对IronFX)
+   datetime EventTime = StrToTime("2013.3.11 10:01");
 
 
-   //事件还有超过30秒才发生，不开单
+   //事件还有超过60秒才发生，不开单
    if(EventTime - TimeCurrent() > 60)
       return(0);
       
@@ -63,7 +64,7 @@ int start()
    }
    
    
-   //此时离时间不到30秒，在价位的上部和下部分别开挂单
+   //此时离时间不到60秒，在价位的上部和下部分别开挂单
    
    //如果已经开了挂单，并且上次挂单的价格和这次挂单的价格相差小于5点，则更改挂单价格
    
@@ -79,11 +80,11 @@ int start()
    }
       
    double price = Ask + PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
-   buyStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2);
+   buyStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2, handle);
 
 
    price = Bid - PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
-   sellStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2);
+   sellStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2,handle);
 
    return(0);
   }
