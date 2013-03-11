@@ -9,7 +9,7 @@ libraries/mqlcache.dat
 scripts/mqlcache.dat
 
 #compiled files
-.ex4
+*.ex4
 
 
 
