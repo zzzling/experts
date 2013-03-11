@@ -10,7 +10,7 @@ scripts/mqlcache.dat
 
 #compiled files
 *.ex4
-
+*.log
 
 
 
