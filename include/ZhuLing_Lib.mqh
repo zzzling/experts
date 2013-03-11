@@ -69,31 +69,6 @@ int buy(string CurrentSymbol, double Lots,double loss,double gain,string comment
    }
 }
 
-int buyStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic)
-{
-   
-   int ticket=OrderSend(CurrentSymbol ,OP_BUYSTOP,Lots,price,5*PointScale(CurrentSymbol),price - loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price +gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
-   if(ticket <= 0)
-   {
-      int errorCode = GetLastError();
-      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
-      return(ticket);
-   }
-   return (0);
-}
-
-int sellStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic)
-{
-   
-   int ticket=OrderSend(CurrentSymbol ,OP_SELLSTOP,Lots,price,5*PointScale(CurrentSymbol),price + loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price-gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
-   if(ticket <= 0)
-   {
-      int errorCode = GetLastError();
-      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
-      return(ticket);
-   }
-   return (0);
-}
 
 
 
@@ -157,6 +132,36 @@ int sell(string CurrentSymbol, double Lots,double loss,double gain,string commen
       return(0);
    }
 }
+
+
+int buyStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic, int FileHandle)
+{
+   FileWrite(FileHandle,TimeToStr(TimeCurrent()),"Buy Stop Price", price, "Stop Loss Price",(price - loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT)),"Take Profit Price",(price +gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT)));
+   int ticket=OrderSend(CurrentSymbol ,OP_BUYSTOP,Lots,price,5*PointScale(CurrentSymbol),price - loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price +gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
+   if(ticket <= 0)
+   {
+      int errorCode = GetLastError();
+      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
+      FileWrite(FileHandle,TimeToStr(TimeCurrent()),"Error Buy Stop, errorCode = ", errorCode, "Error Msg = ",ErrorDescription(errorCode) );
+      return(ticket);
+   }
+   return (0);
+}
+
+int sellStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic,int FileHandle)
+{
+   FileWrite(FileHandle,TimeToStr(TimeCurrent()),"Sell Stop Price", price, "Sell Loss Price",(price + loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT)),"Take Profit Price",(price - gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT)));   
+   int ticket=OrderSend(CurrentSymbol ,OP_SELLSTOP,Lots,price,5*PointScale(CurrentSymbol),price + loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price-gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
+   if(ticket <= 0)
+   {
+      int errorCode = GetLastError();
+      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
+      FileWrite(FileHandle,TimeToStr(TimeCurrent()),"Error Buy Stop, errorCode = ", errorCode, "Error Msg = ",ErrorDescription(errorCode) );
+      return(ticket);
+   }
+   return (0);
+}
+
 
 int closeBuy(string CurrentSymbol)
 {

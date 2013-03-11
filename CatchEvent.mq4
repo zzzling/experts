@@ -5,12 +5,15 @@
 //+------------------------------------------------------------------+
 #include <ZhuLing_Lib.mqh>
 
+
+int handle = 0;
 //+------------------------------------------------------------------+
 //| expert initialization function                                   |
 //+------------------------------------------------------------------+
 int init()
   {
 //----
+   handle = FileOpen("Catch Event Log.csv",FILE_CSV|FILE_READ|FILE_WRITE);
    
 //----
    return(0);
@@ -21,7 +24,10 @@ int init()
 int deinit()
   {
 //----
-   
+   if(handle > 0)
+   {
+      FileClose(handle);
+   }
 //----
    return(0);
   }
@@ -31,15 +37,14 @@ int deinit()
 int start()
   {
 
-   int handle = FileOpen("EALog.csv",FILE_CSV|FILE_READ|FILE_WRITE);
    string CurrentSymbol = Symbol();
    double Lots = 0.1;
-   double PriceJump = 50;
-   double stoploss = 50;
-   double takeprofit = 300;
+   double PriceJump = 8;
+   double stoploss = 5;
+   double takeprofit = 100;
 
    //定义事件的时间，注意是北京时间 - 6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.11 10:01");
+   datetime EventTime = StrToTime("2013.3.11 17:15");
 
 
    //事件还有超过60秒才发生，不开单
