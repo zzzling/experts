@@ -4,6 +4,9 @@
 logs/
 samples/
 mqlcache.dat
+indicators/mqlcache.dat
+libraries/mqlcache.dat
+scripts/mqlcache.dat
 
 #compiled files
 .ex4
