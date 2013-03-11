@@ -1,9 +1,12 @@
-##################
-## My ignore #####
-##################
+#########################
+## My ignore for MT4#####
+########################
 logs/
 samples/
 mqlcache.dat
+
+#compiled files
+.ex4
 
 
 
