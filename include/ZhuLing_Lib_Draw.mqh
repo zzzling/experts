@@ -129,6 +129,7 @@ void DrawSignal(int nSignalType, int Color)
          }
           break;
       case 8:
+         return;
          name = "MA buy";
          ArrowType = SYMBOL_ARROWUP;
          if(CurrentTime - last_MA_Buy_DrawTime  < 1200)
@@ -141,6 +142,7 @@ void DrawSignal(int nSignalType, int Color)
          }
          break;
       case 9:
+         return;
          name = "MA sell";
          ArrowType = SYMBOL_ARROWDOWN;
          if(CurrentTime - last_MA_Buy_DrawTime  < 1200)

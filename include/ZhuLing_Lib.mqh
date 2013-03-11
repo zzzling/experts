@@ -69,6 +69,32 @@ int buy(string CurrentSymbol, double Lots,double loss,double gain,string comment
    }
 }
 
+int buyStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic)
+{
+   
+   int ticket=OrderSend(CurrentSymbol ,OP_BUYSTOP,Lots,price,5*PointScale(CurrentSymbol),price - loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price +gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
+   if(ticket <= 0)
+   {
+      int errorCode = GetLastError();
+      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
+      return(ticket);
+   }
+   return (0);
+}
+
+int sellStop(string CurrentSymbol, double Lots,double price, double loss,double gain,string comment,int magic)
+{
+   
+   int ticket=OrderSend(CurrentSymbol ,OP_SELLSTOP,Lots,price,5*PointScale(CurrentSymbol),price + loss* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),price-gain* PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT),comment,magic,0,Purple);
+   if(ticket <= 0)
+   {
+      int errorCode = GetLastError();
+      Print("Buy error code " + errorCode + " , " + ErrorDescription(errorCode));
+      return(ticket);
+   }
+   return (0);
+}
+
 
 
 int sell(string CurrentSymbol, double Lots,double loss,double gain,string comment,int magic)
@@ -350,23 +376,6 @@ void MoveTakeProfit(double Delta)
    }
 }
 
-void ForceStopLoss(string CurrentSymbol,double StopLoss)
-{
-   double LossThresold = 100000*OrderLots()*StopLoss* PointScale( CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
-   if(OrderProfit()< -1*LossThresold)
-   {
-      if(OrderType() == OP_SELL)
-      {
-         closeSell(CurrentSymbol);
-      }
-      else if(OrderType() == OP_BUY)
-      {
-         closeBuy(CurrentSymbol);
-      }
-   }
-}
-
-
 //止损
 void StopLoss(double Delta)
 {
@@ -401,7 +410,7 @@ void StopLoss(double Delta)
    }
 }
 
-//当盈利时，追加下单
+
 void CheckAddon(double Delta)
 {
    int ErrorCode = 0;
