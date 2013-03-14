@@ -43,7 +43,7 @@ int start()
    double stoploss = 0;
    double takeprofit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.14 2:30");
+   datetime EventTime = StrToTime("2013.3.14 10:30");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
@@ -81,6 +81,16 @@ int start()
       takeprofit = 50;
       Lots = 1;
    }
+   
+   if(StringFind(CurrentSymbol,"USDCHF") != -1)
+   {
+      //为保证能正常开单，上限设为6
+      PriceJump = 50;
+      stoploss = 50;
+      takeprofit = 500;
+      Lots = 0.5;
+   }
+   
 
    if(PriceJump == 0)
    {
@@ -91,7 +101,15 @@ int start()
 
    //事件还有超过120秒才发生，不开单
    if(EventTime - TimeCurrent() > 120)
+   {
       return(0);
+   }
+      
+   //时间已经开始，并且在60秒内，不开单。以免挂单已经生效而反复开单
+   if(TimeCurrent() - EventTime > 0 && TimeCurrent() - EventTime <= 60)
+   {
+      return (0);
+   }
       
    //事件已经发生超过了60秒，将所有挂单删除  
    if(TimeCurrent() - EventTime > 60)
@@ -113,25 +131,45 @@ int start()
    
    //此时离时间不到120秒，在价位的上部和下部分别开挂单
    
-   //如果已经开了挂单，并且上次挂单的价格和这次挂单的价格相差小于5点，则更改挂单价格
+   //Todo: 如果已经开了挂单，并且上次挂单的价格和这次挂单的价格相差小于5点，则更改挂单价格
+   bool BuyStopOpened = false;
+   bool SellStopOpened = false;
    
    for(i=0;i<OrdersTotal();i++)
    {
       if(OrderSelect(i,SELECT_BY_POS,MODE_TRADES))
       {
-         if(OrderType()==OP_BUYSTOP  ||    OrderType()==OP_SELLSTOP)
+         //如果不是当前货币对，则退出
+         if(StringFind(OrderSymbol(),CurrentSymbol) == -1)
          {
-            return (0);           
-         } 
+            continue;
+         }
+         
+         if(OrderType() == OP_BUYSTOP)
+         {
+            BuyStopOpened = true;           
+         }
+         if(OrderType() == OP_SELLSTOP) 
+         {
+            SellStopOpened = true;
+         }
       }
    }
       
-   double price = Ask + PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
-   buyStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2, handle);
+   double price =0;
+   
+   if(!BuyStopOpened)
+   {
+      price = Ask + PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
+      buyStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2, handle);
+   }
 
+   if(!SellStopOpened)
+   {
+      price = Bid - PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
+      sellStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2,handle);
+   }      
 
-   price = Bid - PriceJump*PointScale(CurrentSymbol)*MarketInfo(CurrentSymbol,MODE_POINT);
-   sellStop(CurrentSymbol,Lots,price,stoploss,takeprofit,CurrentSymbol + " Catch Event", 2,handle);
 
    return(0);
   }
