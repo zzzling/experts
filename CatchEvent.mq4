@@ -43,28 +43,43 @@ int start()
    double stoploss = 0;
    double takeprofit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.12 11:30");
+   datetime EventTime = StrToTime("2013.3.14 2:30");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
-      PriceJump = 5;
-      stoploss = 7;
+      //为保证能正常开挂单，上限设为6
+      PriceJump = 6;
+      stoploss = 8;
       takeprofit = 100;
+      Lots = 1;
    }
    
    if(StringFind(CurrentSymbol,"GBPUSD") != -1)
    {
+      //为保证能正常开挂单，上限设为6
       PriceJump = 6;
-      stoploss = 7;
+      stoploss = 8;
       takeprofit = 100;
+      Lots = 1;
    }   
    
    if(StringFind(CurrentSymbol,"USDJPY") != -1)
    {
-      PriceJump = 60;
-      stoploss = 70;
-      takeprofit = 500;
+      //经验证，挂单最小差50
+      PriceJump = 50;
+      stoploss = 50;
+      takeprofit = 200;
+      Lots = 0.1;
+   }
+
+   if(StringFind(CurrentSymbol,"AUDUSD") != -1)
+   {
+      //为保证能正常开单，上限设为6
+      PriceJump = 6;
+      stoploss = 8;
+      takeprofit = 50;
+      Lots = 1;
    }
 
    if(PriceJump == 0)
