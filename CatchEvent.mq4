@@ -43,7 +43,7 @@ int start()
    double stoploss = 0;
    double takeprofit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.15 12:00");
+   datetime EventTime = StrToTime("2013.3.19 11:30");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
