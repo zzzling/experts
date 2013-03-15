@@ -3,6 +3,7 @@
 ########################
 logs/
 samples/
+files/
 mqlcache.dat
 indicators/mqlcache.dat
 libraries/mqlcache.dat
