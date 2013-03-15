@@ -43,25 +43,25 @@ int start()
    double stoploss = 0;
    double takeprofit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.19 11:30");
+   datetime EventTime = StrToTime("2013.3.15 16:20");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
-      PriceJump = 6;
-      stoploss = 8;
+      PriceJump = 7;
+      stoploss = 5;
       takeprofit = 100;
-      Lots = 2;
+      Lots = 1;
    }
    
    if(StringFind(CurrentSymbol,"GBPUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
-      PriceJump = 6;
-      stoploss = 8;
+      PriceJump = 7;
+      stoploss = 5;
       takeprofit = 100;
-      Lots = 2;
+      Lots = 1;
    }   
    
    if(StringFind(CurrentSymbol,"USDJPY") != -1)
@@ -76,10 +76,10 @@ int start()
    if(StringFind(CurrentSymbol,"AUDUSD") != -1)
    {
       //为保证能正常开单，上限设为6
-      PriceJump = 6;
-      stoploss = 8;
+      PriceJump = 7;
+      stoploss = 5;
       takeprofit = 50;
-      Lots = 2;
+      Lots = 1;
    }
    
    if(StringFind(CurrentSymbol,"USDCHF") != -1)
@@ -88,25 +88,25 @@ int start()
       PriceJump = 50;
       stoploss = 50;
       takeprofit = 500;
-      Lots = 2;
+      Lots = 1;
    }
 
    if(StringFind(CurrentSymbol,"EURJPY") != -1)
    {
       //为保证能正常开单，上限设为6
       PriceJump = 7;
-      stoploss = 8;
+      stoploss = 5;
       takeprofit = 100;
-      Lots = 2;
+      Lots = 1;
    }
 
    if(StringFind(CurrentSymbol,"USDCAD") != -1)
    {
       //为保证能正常开单，上限设为6
-      PriceJump = 5;
+      PriceJump = 7;
       stoploss = 5;
       takeprofit = 50;
-      Lots = 2;
+      Lots = 1;
    }
    
    if(StringFind(CurrentSymbol,"NZDUSD") != -1)
@@ -115,7 +115,7 @@ int start()
       PriceJump = 50;
       stoploss = 50;
       takeprofit = 200;
-      Lots = 2;
+      Lots = 1;
    }   
    
 
@@ -123,7 +123,6 @@ int start()
    {
       return (0);
    }
-
 
 
    //事件还有超过120秒才发生，不开单
