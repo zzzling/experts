@@ -136,7 +136,10 @@ int start()
    {
       return (0);
    }
-      
+   
+   
+   int i = 0;
+/*      
    //事件已经发生超过了60秒，将所有挂单删除  
    if(TimeCurrent() - EventTime > 60)
    {
@@ -153,7 +156,7 @@ int start()
       }
       return(0);
    }
-   
+*/   
    
    //此时离时间不到120秒，在价位的上部和下部分别开挂单
    
