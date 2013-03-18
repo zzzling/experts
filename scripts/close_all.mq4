@@ -36,13 +36,20 @@ int start()
                   error=GetLastError(); 
                   Print("LastError = ",error); 
                }
-               else 
+               else
+               { 
                   error=0;
+                  break;
+               }   
                   
                if(error==135) 
+               {
                   RefreshRates();
+               }   
                else 
+               {
                   continue;
+               }   
             }
          }
       }
