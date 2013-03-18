@@ -43,7 +43,7 @@ int start()
    double stoploss = 0;
    double takeprofit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.15 16:20");
+   datetime EventTime = StrToTime("2013.3.18 8:45");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
@@ -117,7 +117,18 @@ int start()
       takeprofit = 200;
       Lots = 1;
    }   
+
    
+   if(StringFind(CurrentSymbol,"EURCHF") != -1)
+   {
+      //为保证能正常开单，上限设为6
+      PriceJump = 7;
+      stoploss = 5;
+      takeprofit = 50;
+      Lots = 1;
+   }
+   
+         
 
    if(PriceJump == 0)
    {

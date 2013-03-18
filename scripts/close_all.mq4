@@ -30,7 +30,7 @@ int start()
                   price=Bid;
                else            
                   price=Ask;
-               result = OrderClose(OrderTicket(),OrderLots(),price,5,CLR_NONE);
+               result = OrderClose(OrderTicket(),OrderLots(),price,50,CLR_NONE);
                if(result!=TRUE) 
                { 
                   error=GetLastError(); 
