@@ -335,7 +335,7 @@ void MoveTakeProfit(double Delta)
       
       if(LastHighestLoss >=  -1*ProfitThresold)
       {
-         ProfitThresold = ProfitThresold*2;
+//         ProfitThresold = ProfitThresold*2;
       }
       
 
@@ -347,7 +347,7 @@ void MoveTakeProfit(double Delta)
       
       if(nRepeated >= 2)
       {
-         ProfitThresold = ProfitThresold/2;
+//         ProfitThresold = ProfitThresold/2;
       }
       
       
@@ -363,7 +363,7 @@ void MoveTakeProfit(double Delta)
          DrawArrow("Take Profit",SYMBOL_ARROWDOWN,Yellow);
       }
       
-      
+/*      
       //如果开盘后一直亏损，切当前亏损额大于Thresold，平仓
       if( LastHighestProfit<=0.4*LossThresold && OrderProfit() < -0.8*LossThresold)
       {
@@ -375,9 +375,7 @@ void MoveTakeProfit(double Delta)
          LastHighestLoss = 0;
          DrawArrow("Stop Loss",SYMBOL_STOPSIGN,Yellow);
       }
-      
-      
-      
+*/          
    }
 }
 

@@ -42,26 +42,29 @@ int start()
    double PriceJump = 0;
    double stoploss = 0;
    double takeprofit = 0;
+   double MoveTakeProfit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.18 8:45");
+   datetime EventTime = StrToTime("2013.3.19 12:00");
 
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
-      PriceJump = 7;
+      PriceJump = 6;
       stoploss = 5;
       takeprofit = 100;
-      Lots = 1;
+      Lots = 0.5;
+      MoveTakeProfit = 10;
    }
    
    if(StringFind(CurrentSymbol,"GBPUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
-      PriceJump = 7;
+      PriceJump = 6;
       stoploss = 5;
       takeprofit = 100;
       Lots = 1;
+      MoveTakeProfit = 10;
    }   
    
    if(StringFind(CurrentSymbol,"USDJPY") != -1)
@@ -71,6 +74,7 @@ int start()
       stoploss = 50;
       takeprofit = 200;
       Lots = 1;
+      MoveTakeProfit = 50;
    }
 
    if(StringFind(CurrentSymbol,"AUDUSD") != -1)
@@ -80,6 +84,7 @@ int start()
       stoploss = 5;
       takeprofit = 50;
       Lots = 1;
+      MoveTakeProfit = 10;
    }
    
    if(StringFind(CurrentSymbol,"USDCHF") != -1)
@@ -89,6 +94,7 @@ int start()
       stoploss = 50;
       takeprofit = 500;
       Lots = 1;
+      MoveTakeProfit = 50;
    }
 
    if(StringFind(CurrentSymbol,"EURJPY") != -1)
@@ -98,6 +104,8 @@ int start()
       stoploss = 5;
       takeprofit = 100;
       Lots = 1;
+      MoveTakeProfit = 5;
+
    }
 
    if(StringFind(CurrentSymbol,"USDCAD") != -1)
@@ -107,6 +115,7 @@ int start()
       stoploss = 5;
       takeprofit = 50;
       Lots = 1;
+      MoveTakeProfit = 5;
    }
    
    if(StringFind(CurrentSymbol,"NZDUSD") != -1)
@@ -116,6 +125,7 @@ int start()
       stoploss = 50;
       takeprofit = 200;
       Lots = 1;
+      MoveTakeProfit = 50;
    }   
 
    
@@ -126,6 +136,7 @@ int start()
       stoploss = 5;
       takeprofit = 50;
       Lots = 1;
+      MoveTakeProfit = 5;
    }
    
          
@@ -136,8 +147,8 @@ int start()
    }
 
 
-   //事件还有超过120秒才发生，不开单
-   if(EventTime - TimeCurrent() > 120)
+   //事件还有超过90秒才发生，不开单
+   if(EventTime - TimeCurrent() > 90)
    {
       return(0);
    }
@@ -145,16 +156,17 @@ int start()
    //时间已经开始，并且在60秒内，不开单。以免挂单已经生效而反复开单
    if(TimeCurrent() - EventTime > 0 && TimeCurrent() - EventTime <= 60)
    {
+      MoveTakeProfit(MoveTakeProfit);
       return (0);
    }
    
    
    int i = 0;
-/*      
+      
    //事件已经发生超过了60秒，将所有挂单删除  
    if(TimeCurrent() - EventTime > 60)
    {
-      for(int i=0;i<OrdersTotal();i++)
+/*      for(int i=0;i<OrdersTotal();i++)
       {
          if(OrderSelect(i,SELECT_BY_POS,MODE_TRADES))
          {
@@ -165,11 +177,11 @@ int start()
             } 
          }
       }
-      return(0);
+*/      return(0);
    }
-*/   
    
-   //此时离时间不到120秒，在价位的上部和下部分别开挂单
+   
+   //此时离时间不到90秒，在价位的上部和下部分别开挂单
    
    //Todo: 如果已经开了挂单，并且上次挂单的价格和这次挂单的价格相差小于5点，则更改挂单价格
    bool BuyStopOpened = false;
