@@ -44,16 +44,16 @@ int start()
    double takeprofit = 0;
    double MoveTakeProfit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
-   datetime EventTime = StrToTime("2013.3.19 12:00");
-
+   //4月1号以后是 北京时间 - 5小时(对IronFX)
+   datetime EventTime = StrToTime("2013.04.11 15:37");
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
       PriceJump = 6;
-      stoploss = 5;
+      stoploss = 10;
       takeprofit = 100;
-      Lots = 0.5;
+      Lots = 0.1;
       MoveTakeProfit = 10;
    }
    
@@ -61,9 +61,9 @@ int start()
    {
       //为保证能正常开挂单，上限设为6
       PriceJump = 6;
-      stoploss = 5;
+      stoploss = 10;
       takeprofit = 100;
-      Lots = 1;
+      Lots = 0.1;
       MoveTakeProfit = 10;
    }   
    
@@ -73,7 +73,7 @@ int start()
       PriceJump = 50;
       stoploss = 50;
       takeprofit = 200;
-      Lots = 1;
+      Lots = 0.1;
       MoveTakeProfit = 50;
    }
 
@@ -103,7 +103,7 @@ int start()
       PriceJump = 7;
       stoploss = 5;
       takeprofit = 100;
-      Lots = 1;
+      Lots = 0.1;
       MoveTakeProfit = 5;
 
    }
@@ -114,7 +114,7 @@ int start()
       PriceJump = 7;
       stoploss = 5;
       takeprofit = 50;
-      Lots = 1;
+      Lots = 0.1;
       MoveTakeProfit = 5;
    }
    
@@ -124,7 +124,7 @@ int start()
       PriceJump = 50;
       stoploss = 50;
       takeprofit = 200;
-      Lots = 1;
+      Lots = 0.1;
       MoveTakeProfit = 50;
    }   
 
@@ -139,7 +139,6 @@ int start()
       MoveTakeProfit = 5;
    }
    
-         
 
    if(PriceJump == 0)
    {
@@ -182,6 +181,7 @@ int start()
    
    
    //此时离时间不到90秒，在价位的上部和下部分别开挂单
+   Print("open order");
    
    //Todo: 如果已经开了挂单，并且上次挂单的价格和这次挂单的价格相差小于5点，则更改挂单价格
    bool BuyStopOpened = false;
