@@ -45,7 +45,7 @@ int start()
    double MoveTakeProfit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
    //4月1号以后是 北京时间 - 5小时(对IronFX)
-   datetime EventTime = StrToTime("2013.04.11 15:37");
+   datetime EventTime = StrToTime("2013.05.03 12:00");
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
@@ -197,11 +197,13 @@ int start()
             continue;
          }
          
-         if(OrderType() == OP_BUYSTOP)
+         //如果在最近10分钟内已经开过单了，则不再重新开单
+         if((OrderType() == OP_BUYSTOP) && (TimeCurrent() - OrderOpenTime() < 600))
          {
             BuyStopOpened = true;           
          }
-         if(OrderType() == OP_SELLSTOP) 
+          //如果在最近10分钟内已经开过单了，则不再重新开单
+         if((OrderType() == OP_SELLSTOP) && (TimeCurrent() - OrderOpenTime() < 600))
          {
             SellStopOpened = true;
          }
