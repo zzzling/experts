@@ -45,15 +45,15 @@ int start()
    double MoveTakeProfit = 0;
    //定义事件的时间，注意是北京时间 -  6小时(对IronFX)
    //4月1号以后是 北京时间 - 5小时(对IronFX)
-   datetime EventTime = StrToTime("2013.05.03 12:00");
+   datetime EventTime = StrToTime("2013.06.07 15:30");
     
    if(StringFind(CurrentSymbol,"EURUSD") != -1)
    {
       //为保证能正常开挂单，上限设为6
       PriceJump = 6;
-      stoploss = 10;
-      takeprofit = 100;
-      Lots = 0.1;
+      stoploss = 50;
+      takeprofit = 300;
+      Lots = 0.5;
       MoveTakeProfit = 10;
    }
    
@@ -61,7 +61,7 @@ int start()
    {
       //为保证能正常开挂单，上限设为6
       PriceJump = 6;
-      stoploss = 10;
+      stoploss = 50;
       takeprofit = 100;
       Lots = 0.1;
       MoveTakeProfit = 10;
@@ -70,19 +70,19 @@ int start()
    if(StringFind(CurrentSymbol,"USDJPY") != -1)
    {
       //经验证，挂单最小差50
-      PriceJump = 50;
-      stoploss = 50;
-      takeprofit = 200;
-      Lots = 0.1;
-      MoveTakeProfit = 50;
+      PriceJump = 60;
+      stoploss = 300;
+      takeprofit = 3000;
+      Lots = 0.5;
+      MoveTakeProfit = 70;
    }
 
    if(StringFind(CurrentSymbol,"AUDUSD") != -1)
    {
       //为保证能正常开单，上限设为6
-      PriceJump = 7;
-      stoploss = 5;
-      takeprofit = 50;
+      PriceJump = 10;
+      stoploss = 40;
+      takeprofit = 90;
       Lots = 1;
       MoveTakeProfit = 10;
    }
@@ -91,7 +91,7 @@ int start()
    {
       //为保证能正常开单，上限设为6
       PriceJump = 50;
-      stoploss = 50;
+      stoploss = 100;
       takeprofit = 500;
       Lots = 1;
       MoveTakeProfit = 50;
@@ -101,7 +101,7 @@ int start()
    {
       //为保证能正常开单，上限设为6
       PriceJump = 7;
-      stoploss = 5;
+      stoploss = 40;
       takeprofit = 100;
       Lots = 0.1;
       MoveTakeProfit = 5;
@@ -112,8 +112,8 @@ int start()
    {
       //为保证能正常开单，上限设为6
       PriceJump = 7;
-      stoploss = 5;
-      takeprofit = 50;
+      stoploss = 40;
+      takeprofit = 100;
       Lots = 0.1;
       MoveTakeProfit = 5;
    }
@@ -122,7 +122,7 @@ int start()
    {
       //为保证能正常开单，上限设为6
       PriceJump = 50;
-      stoploss = 50;
+      stoploss = 100;
       takeprofit = 200;
       Lots = 0.1;
       MoveTakeProfit = 50;
@@ -133,8 +133,8 @@ int start()
    {
       //为保证能正常开单，上限设为6
       PriceJump = 7;
-      stoploss = 5;
-      takeprofit = 50;
+      stoploss = 40;
+      takeprofit = 100;
       Lots = 1;
       MoveTakeProfit = 5;
    }
